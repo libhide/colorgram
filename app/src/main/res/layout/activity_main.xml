@@ -5,15 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
+    android:onClick="toggleSliders"
     tools:context="com.ratik.colorgram.MainActivity">
 
-    <fragment
-        android:id="@+id/colorSelectFragment"
-        android:name="com.ratik.colorgram.ColorPickerFragment"
+    <FrameLayout
+        android:id="@+id/slidersContainer"
         android:layout_width="match_parent"
-        android:layout_height="210dp"
         android:layout_alignParentBottom="true"
-        tools:layout="@layout/fragment_color_select" />
-
+        android:layout_height="210dp" />
 
 </RelativeLayout>
