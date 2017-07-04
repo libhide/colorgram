@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context="com.ratik.colorgram.MainActivity">
+
+    <fragment
+        android:id="@+id/colorSelectFragment"
+        android:name="com.ratik.colorgram.ColorPickerFragment"
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
+        android:layout_alignParentBottom="true"
+        tools:layout="@layout/fragment_color_select" />
 
 
 </RelativeLayout>
