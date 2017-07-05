@@ -24,6 +24,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -43,12 +44,15 @@ public class MainActivity extends AppCompatActivity implements OnColorChangeList
     // Views
     @BindView(R.id.mainLayout)
     RelativeLayout mainLayout;
+    @BindView(R.id.tooltipTextView)
+    TextView tooltipTextView;
 
     // Helpers
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
     private ColorPickerFragment colorPickerFragment;
     private int red, green, blue;
+    private boolean isFirstRun;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +73,15 @@ public class MainActivity extends AppCompatActivity implements OnColorChangeList
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         } else {
             setTheme(R.style.AppTheme_Fullscreen);
+        }
+
+        // Flag off splash screen
+        if (isFirstRun) {
+            isFirstRun = false;
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putBoolean(SplashActivity.CONST_FIRST_RUN, isFirstRun);
+            editor.apply();
         }
     }
 
