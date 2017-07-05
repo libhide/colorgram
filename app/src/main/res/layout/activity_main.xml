@@ -9,6 +9,7 @@
     tools:context="com.ratik.colorgram.MainActivity">
 
     <ImageButton
+        android:id="@+id/saveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"

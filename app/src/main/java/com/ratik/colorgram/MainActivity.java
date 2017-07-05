@@ -7,6 +7,8 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,6 +25,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements OnColorChangeList
     RelativeLayout mainLayout;
     @BindView(R.id.tooltipTextView)
     TextView tooltipTextView;
+    @BindView(R.id.saveButton)
+    ImageButton saveButton;
 
     // Helpers
     private FragmentManager fragmentManager;
@@ -104,8 +109,25 @@ public class MainActivity extends AppCompatActivity implements OnColorChangeList
         this.red = red;
         this.green = green;
         this.blue = blue;
+
+        // save button color
+        Drawable saveDrawable = saveButton.getDrawable();
+        if (shouldSaveButtonBeWhite()) {
+            saveDrawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+        } else {
+            saveDrawable.setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_ATOP);
+        }
+        saveButton.setImageDrawable(saveDrawable);
+
+        // set background color
         int color = Color.rgb(red, green, blue);
         mainLayout.setBackgroundColor(color);
+    }
+
+    // Logic: https://stackoverflow.com/a/9780689/3150771
+    private boolean shouldSaveButtonBeWhite() {
+        double y = 0.2126 * red + 0.7152 * green + 0.0722 * blue;
+        return y < 128;
     }
 
     public void saveColorImage(View view) {
