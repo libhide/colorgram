@@ -66,6 +66,26 @@ public class MainActivity extends AppCompatActivity implements OnColorChangeList
         ButterKnife.bind(this);
 
         init();
+
+        // Click listeners to show and hide color sliders
+        mainLayout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                if (!slidersAreVisible) {
+                    showSliders();
+                }
+                return true;
+            }
+        });
+
+        mainLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (slidersAreVisible) {
+                    hideSliders();
+                }
+            }
+        });
     }
 
     private void init() {
@@ -81,27 +101,25 @@ public class MainActivity extends AppCompatActivity implements OnColorChangeList
         }
     }
 
-    public void toggleSliders(View view) {
-        if (slidersAreVisible) {
-            // hide slider fragment
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.setCustomAnimations(R.anim.bottom_up,
-                    R.anim.bottom_down);
-            fragmentTransaction.remove(colorPickerFragment);
-            fragmentTransaction.commit();
-            slidersAreVisible = false;
-        } else {
-            // show slider fragment
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.setCustomAnimations(R.anim.bottom_up,
-                    R.anim.bottom_down);
-            fragmentTransaction.replace(R.id.slidersContainer, colorPickerFragment);
-            fragmentTransaction.commit();
-            slidersAreVisible = true;
+    private void hideSliders() {
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.bottom_up,
+                R.anim.bottom_down);
+        fragmentTransaction.remove(colorPickerFragment);
+        fragmentTransaction.commit();
+        slidersAreVisible = false;
+    }
 
-            // hide tooltip
-            tooltipTextView.setVisibility(View.INVISIBLE);
-        }
+    private void showSliders() {
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.bottom_up,
+                R.anim.bottom_down);
+        fragmentTransaction.replace(R.id.slidersContainer, colorPickerFragment);
+        fragmentTransaction.commit();
+        slidersAreVisible = true;
+
+        // hide tooltip
+        tooltipTextView.setVisibility(View.INVISIBLE);
     }
 
     @Override

@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/appColor"
-    android:onClick="toggleSliders"
     tools:context="com.ratik.colorgram.MainActivity">
 
     <ImageButton
@@ -28,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center"
-        android:text="Tap the screen to tweak the color."
+        android:text="@string/tooltip"
         android:textColor="#a3ffffff"
         android:textSize="16sp"
         android:visibility="invisible" />
