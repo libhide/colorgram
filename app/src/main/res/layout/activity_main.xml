@@ -4,9 +4,29 @@
     android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/appColor"
     android:onClick="toggleSliders"
     tools:context="com.ratik.colorgram.MainActivity">
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="40dp"
+        android:background="@null"
+        android:onClick="saveColorImage"
+        android:src="@drawable/ic_save" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="Tap the screen to tweak the color."
+        android:textColor="#a3ffffff"
+        android:textSize="16sp" />
 
     <FrameLayout
         android:id="@+id/slidersContainer"

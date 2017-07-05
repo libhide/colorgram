@@ -1,11 +1,12 @@
 package com.ratik.colorgram;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatSeekBar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,14 +64,8 @@ public class ColorPickerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView()");
         View rootView = inflater.inflate(R.layout.fragment_color_select, container, false);
         ButterKnife.bind(this, rootView);
-
-        // set default positions for the sliders
-        redSlider.setProgress(66);
-        greenSlider.setProgress(134);
-        blueSlider.setProgress(245);
 
         redSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -126,5 +121,30 @@ public class ColorPickerFragment extends Fragment {
             }
         });
         return rootView;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("red", red);
+        editor.putInt("green", green);
+        editor.putInt("blue", blue);
+        editor.apply();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        red = prefs.getInt("red", 66);
+        green = prefs.getInt("green", 134);
+        blue = prefs.getInt("blue", 245);
+
+        // set default positions for the sliders
+        redSlider.setProgress(red);
+        greenSlider.setProgress(green);
+        blueSlider.setProgress(blue);
     }
 }
