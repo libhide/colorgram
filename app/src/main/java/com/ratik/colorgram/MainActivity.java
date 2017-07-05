@@ -1,11 +1,15 @@
 package com.ratik.colorgram;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Slide;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
 import butterknife.BindView;
@@ -59,6 +63,14 @@ public class MainActivity extends AppCompatActivity implements OnColorChangeList
             fragmentTransaction.add(R.id.slidersContainer, colorPickerFragment);
             fragmentTransaction.commit();
             slidersAreVisible = true;
+        }
+
+        // Add visual treat for L+ devices
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setEnterTransition(new Slide(Gravity.END));
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        } else {
+            setTheme(R.style.AppTheme_Fullscreen);
         }
     }
 
