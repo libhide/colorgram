@@ -27,7 +27,8 @@
         android:gravity="center"
         android:text="Tap the screen to tweak the color."
         android:textColor="#a3ffffff"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:visibility="invisible" />
 
     <FrameLayout
         android:id="@+id/slidersContainer"

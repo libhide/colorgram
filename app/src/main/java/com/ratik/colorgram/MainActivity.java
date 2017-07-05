@@ -74,15 +74,6 @@ public class MainActivity extends AppCompatActivity implements OnColorChangeList
         } else {
             setTheme(R.style.AppTheme_Fullscreen);
         }
-
-        // Flag off splash screen
-        if (isFirstRun) {
-            isFirstRun = false;
-            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-            SharedPreferences.Editor editor = sp.edit();
-            editor.putBoolean(SplashActivity.CONST_FIRST_RUN, isFirstRun);
-            editor.apply();
-        }
     }
 
     public void toggleSliders(View view) {
@@ -102,6 +93,9 @@ public class MainActivity extends AppCompatActivity implements OnColorChangeList
             fragmentTransaction.replace(R.id.slidersContainer, colorPickerFragment);
             fragmentTransaction.commit();
             slidersAreVisible = true;
+
+            // hide tooltip
+            tooltipTextView.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -189,6 +183,19 @@ public class MainActivity extends AppCompatActivity implements OnColorChangeList
         blue = prefs.getInt("blue", 245);
         int color = Color.rgb(red, green, blue);
         mainLayout.setBackgroundColor(color);
+
+        isFirstRun = prefs.getBoolean("first_run", true);
+        if (isFirstRun) {
+            // tooltip
+            tooltipTextView.setVisibility(View.VISIBLE);
+
+            isFirstRun = false;
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean("first_run", isFirstRun);
+            editor.apply();
+        } else {
+            tooltipTextView.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override

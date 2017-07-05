@@ -1,15 +1,11 @@
 package com.ratik.colorgram;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
-    public static final String CONST_FIRST_RUN = "first_run";
-    private boolean isFirstRun = true;
     private Intent mainIntent;
 
     @Override
@@ -18,15 +14,7 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         mainIntent = new Intent(SplashActivity.this, MainActivity.class);
-
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        isFirstRun = sp.getBoolean(SplashActivity.CONST_FIRST_RUN, true);
-
-        if (isFirstRun) {
-            showSplashScreen();
-        } else {
-            startActivity(mainIntent);
-        }
+        showSplashScreen();
     }
 
     private void showSplashScreen() {
