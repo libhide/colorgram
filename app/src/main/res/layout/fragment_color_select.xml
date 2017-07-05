@@ -18,8 +18,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.1"
             android:text="@string/red"
-            android:textColor="@android:color/black"
-            android:textSize="18sp" />
+            android:textColor="#af000000"
+            android:textSize="14sp" />
 
         <android.support.v7.widget.AppCompatSeekBar
             android:id="@+id/redSlider"
@@ -42,8 +42,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.1"
             android:text="@string/green"
-            android:textColor="@android:color/black"
-            android:textSize="18sp" />
+            android:textColor="#af000000"
+            android:textSize="14sp" />
 
         <android.support.v7.widget.AppCompatSeekBar
             android:id="@+id/greenSlider"
@@ -66,8 +66,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.1"
             android:text="@string/label_blue"
-            android:textColor="@android:color/black"
-            android:textSize="18sp" />
+            android:textColor="#af000000"
+            android:textSize="14sp" />
 
         <android.support.v7.widget.AppCompatSeekBar
             android:id="@+id/blueSlider"

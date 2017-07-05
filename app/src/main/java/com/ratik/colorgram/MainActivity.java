@@ -110,7 +110,15 @@ public class MainActivity extends AppCompatActivity implements OnColorChangeList
         this.green = green;
         this.blue = blue;
 
-        // save button color
+        // update view
+        setViewCorrectly();
+
+        // set background color
+        int color = Color.rgb(red, green, blue);
+        mainLayout.setBackgroundColor(color);
+    }
+
+    private void setViewCorrectly() {
         Drawable saveDrawable = saveButton.getDrawable();
         if (shouldSaveButtonBeWhite()) {
             saveDrawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
@@ -118,10 +126,6 @@ public class MainActivity extends AppCompatActivity implements OnColorChangeList
             saveDrawable.setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_ATOP);
         }
         saveButton.setImageDrawable(saveDrawable);
-
-        // set background color
-        int color = Color.rgb(red, green, blue);
-        mainLayout.setBackgroundColor(color);
     }
 
     // Logic: https://stackoverflow.com/a/9780689/3150771
@@ -203,6 +207,10 @@ public class MainActivity extends AppCompatActivity implements OnColorChangeList
         red = prefs.getInt("red", 66);
         green = prefs.getInt("green", 134);
         blue = prefs.getInt("blue", 245);
+
+        // update view
+        setViewCorrectly();
+
         int color = Color.rgb(red, green, blue);
         mainLayout.setBackgroundColor(color);
 
