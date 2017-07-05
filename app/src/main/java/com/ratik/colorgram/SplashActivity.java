@@ -22,7 +22,7 @@ public class SplashActivity extends AppCompatActivity {
         Thread timer = new Thread() {
             public void run() {
                 try {
-                    sleep(2000);
+                    sleep(1500);
                     startActivity(mainIntent);
                     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 } catch (InterruptedException e) {

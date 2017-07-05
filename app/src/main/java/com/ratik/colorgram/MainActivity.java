@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements OnColorChangeList
     // Logic: https://stackoverflow.com/a/9780689/3150771
     private boolean shouldSaveButtonBeWhite() {
         double y = 0.2126 * red + 0.7152 * green + 0.0722 * blue;
-        return y < 128;
+        return y < 200;
     }
 
     public void saveColorImage(View view) {
