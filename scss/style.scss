@@ -1,0 +1,12 @@
+// Base styles
+@import 'base/_normalize.scss';
+@import 'base/_vars.scss';
+
+// Vendor
+@import 'vendor/_external.scss';
+
+// Site styles
+body {
+  // Remove this to and then start working
+  background-color: #ffe4e8;
+}

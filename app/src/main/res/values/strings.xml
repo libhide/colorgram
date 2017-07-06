@@ -1,7 +1,0 @@
-<resources>
-    <string name="app_name">Colorgram</string>
-    <string name="red">R</string>
-    <string name="green">G</string>
-    <string name="label_blue">B</string>
-    <string name="tooltip">Tap and hold the screen to tweak the color.</string>
-</resources>
