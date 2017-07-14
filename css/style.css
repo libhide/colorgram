@@ -369,4 +369,106 @@ th {
   padding: 0; }
 
 body {
-  background-color: #ffe4e8; }
+  color: #FFFFFF;
+  background-color: #4286F5;
+  line-height: 1.6;
+  font-size: 1em;
+  -webkit-font-smoothing: antialiased;
+  font-family: Lucida Grande, Lucida Sans Unicode, Lucida Sans, Geneva, Verdana, sans-serif; }
+
+main {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  -ms-flex-pack: center;
+      justify-content: center;
+  height: 100vh;
+  padding: 0 20px; }
+
+#container {
+  height: 500px;
+  max-width: 800px;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  margin-top: -60px; }
+  @media screen and (max-width: 555px) {
+    #container {
+      margin-top: 20px;
+      display: block; } }
+
+#details-wrapper {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  margin-right: 5%;
+  width: 45%;
+  margin-left: 5%; }
+  @media screen and (max-width: 555px) {
+    #details-wrapper {
+      margin: 110px 0 30px;
+      width: 100%; } }
+
+.title {
+  font-size: 2.3em;
+  font-weight: bold;
+  margin: 0; }
+
+.subtitle {
+  font-size: 1.2em;
+  margin: 0;
+  margin-top: -5px;
+  margin-bottom: 50px; }
+
+.playlink {
+  display: block;
+  width: 140px;
+  height: 34px;
+  padding: 16px 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
+  background-color: #000;
+  background-image: url(../img/onplay.png);
+  background-repeat: no-repeat;
+  background-size: 140px 34px;
+  background-position: 50% 50%;
+  text-decoration: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  transition: box-shadow .15s ease;
+  outline: 0;
+  margin-top: 32px; }
+  .playlink:hover, .playlink:focus {
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12); }
+
+#phone {
+  width: 45%; }
+  #phone img {
+    width: 110%; }
+  @media screen and (max-width: 555px) {
+    #phone {
+      display: none;
+      width: 100%; } }
+
+#phone-body {
+  background-image: url(../img/phone.png);
+  margin: 0 auto;
+  width: 374px;
+  height: 510px;
+  background-size: 374px 510px;
+  perspective: 600px; }
+  @media screen and (max-width: 555px) {
+    #phone-body {
+      width: 100%; } }
+
+.gif {
+  position: relative;
+  top: 66px;
+  width: 49% !important;
+  height: 75%;
+  transform: rotateY(-10deg); }

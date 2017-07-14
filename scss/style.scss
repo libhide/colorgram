@@ -7,6 +7,118 @@
 
 // Site styles
 body {
-  // Remove this to and then start working
-  background-color: #ffe4e8;
+  color: $textColor;
+  background-color: $colorPrimary;
+  line-height: 1.6;
+  font-size: 1em;
+  -webkit-font-smoothing: antialiased;
+  font-family: Lucida Grande, Lucida Sans Unicode, Lucida Sans, Geneva, Verdana, sans-serif;
+}
+
+main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: 0 20px;
+
+  @media screen and (max-width: 555px) {
+    // display: block;
+  }
+}
+
+#container {
+  height: 500px;
+  max-width: 800px;
+  display: flex;
+  flex-direction: row;
+  margin-top: -60px;
+
+  @media screen and (max-width: 555px) {
+    margin-top: 20px;
+    display: block;
+  }
+}
+
+#details-wrapper {
+  display: flex;
+  align-items: center;
+  margin-right: 5%;
+  width: 45%;
+  margin-left: 5%;
+
+  @media screen and (max-width: 555px) {
+    margin: 110px 0 30px;
+    width: 100%;
+  }
+}
+
+.title {
+  font-size: 2.3em;
+  font-weight: bold;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 1.2em;
+  margin: 0;
+  margin-top: -5px;
+  margin-bottom: 50px;
+}
+
+.playlink {
+  display: block;
+  width: 140px;
+  height: 34px;
+  padding: 16px 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+  background-color: #000;
+  background-image: url(../img/onplay.png);
+  background-repeat: no-repeat;
+  background-size: 140px 34px;
+  background-position: 50% 50%;
+  text-decoration: none;
+  user-select: none;
+  transition: box-shadow .15s ease;
+  outline: 0;
+  margin-top: 32px;
+
+  &:hover,
+  &:focus {
+    box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12);
+  }
+}
+
+#phone {
+  width: 45%;
+  img {
+    width: 110%;
+  }
+
+  @media screen and (max-width: 555px) {
+    display: none;
+    width: 100%;
+  }
+}
+
+#phone-body {
+  background-image: url(../img/phone.png);
+  margin: 0 auto;
+  width: 374px;
+  height: 510px;
+  background-size: 374px 510px;
+  perspective: 600px;
+
+  @media screen and (max-width: 555px) {
+    width: 100%;
+  }
+}
+
+.gif {
+  position: relative;
+  top: 66px;
+  width: 49% !important;
+  height: 75%;
+  transform: rotateY(-10deg);
 }

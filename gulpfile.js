@@ -40,12 +40,11 @@ gulp.task('css', function () {
 gulp.task('js',function(){
   gulp.src('./js/site.js')
     .pipe(sourcemaps.init())
-    .pipe(header(creds, { package : package }))
     .pipe(gulp.dest('./js'))
     .pipe(uglify())
     .on('error', function (err) { gutil.log(gutil.colors.red('[Error]'), err.toString()); })
-    .pipe(header(creds, { package : package }))
     .pipe(rename({ suffix: '.min' }))
+    .pipe(header(creds, { package : package }))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('./js'))
     .pipe(browserSync.reload({stream:true, once: true}));
