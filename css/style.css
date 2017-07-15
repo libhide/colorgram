@@ -472,3 +472,16 @@ main {
   width: 49% !important;
   height: 75%;
   transform: rotateY(-10deg); }
+
+footer p {
+  position: absolute;
+  left: 50%;
+  bottom: 5px;
+  margin-left: -100px;
+  font-size: 0.9em;
+  text-align: center; }
+  footer p a {
+    color: white;
+    text-decoration: none; }
+    footer p a:hover {
+      text-decoration: underline; }

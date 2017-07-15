@@ -122,3 +122,23 @@ main {
   height: 75%;
   transform: rotateY(-10deg);
 }
+
+footer {
+  p {
+    position: absolute;
+    left: 50%;
+    bottom: 5px;
+    margin-left: -100px;
+    font-size: 0.9em;
+    text-align: center;
+
+    a {
+      color: white;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
