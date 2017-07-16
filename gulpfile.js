@@ -3,7 +3,6 @@ var gulp = require('gulp'),
     sass = require('gulp-sass'),
     browserSync = require('browser-sync'),
     autoprefixer = require('gulp-autoprefixer'),
-    uglify = require('gulp-uglify'),
     header  = require('gulp-header'),
     rename = require('gulp-rename'),
     cssnano = require('gulp-cssnano'),
@@ -37,19 +36,6 @@ gulp.task('css', function () {
     .pipe(browserSync.reload({stream:true}));
 });
 
-gulp.task('js',function(){
-  gulp.src('./js/site.js')
-    .pipe(sourcemaps.init())
-    .pipe(gulp.dest('./js'))
-    .pipe(uglify())
-    .on('error', function (err) { gutil.log(gutil.colors.red('[Error]'), err.toString()); })
-    .pipe(rename({ suffix: '.min' }))
-    .pipe(header(creds, { package : package }))
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest('./js'))
-    .pipe(browserSync.reload({stream:true, once: true}));
-});
-
 gulp.task('browser-sync', function() {
     browserSync.init(null, {
         server: {
@@ -61,8 +47,7 @@ gulp.task('bs-reload', function () {
     browserSync.reload();
 });
 
-gulp.task('default', ['css', 'js', 'browser-sync'], function () {
+gulp.task('default', ['css', 'browser-sync'], function () {
     gulp.watch("./scss/**/*.scss", ['css']);
-    gulp.watch("./js/*.js", ['js']);
     gulp.watch("./*.html", ['bs-reload']);
 });
