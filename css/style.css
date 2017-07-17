@@ -385,6 +385,9 @@ main {
       justify-content: center;
   height: 100vh;
   padding: 0 20px; }
+  @media screen and (max-width: 555px) {
+    main {
+      display: block; } }
 
 #container {
   height: 500px;
@@ -396,7 +399,8 @@ main {
   margin-top: -60px; }
   @media screen and (max-width: 555px) {
     #container {
-      margin-top: 20px;
+      height: auto;
+      margin: -20px 0 40px;
       display: block; } }
 
 #details-wrapper {
@@ -409,7 +413,7 @@ main {
   margin-left: 5%; }
   @media screen and (max-width: 555px) {
     #details-wrapper {
-      margin: 110px 0 30px;
+      margin-top: 50px;
       width: 100%; } }
 
 .title {
@@ -485,3 +489,25 @@ footer p {
     text-decoration: none; }
     footer p a:hover {
       text-decoration: underline; }
+  @media screen and (max-width: 555px) {
+    footer p {
+      position: static;
+      text-align: center;
+      left: auto;
+      bottom: auto;
+      margin: 0;
+      margin-bottom: 20px; } }
+
+#phone-mobile {
+  display: none;
+  margin: 0 auto; }
+  #phone-mobile img {
+    width: 300px !important; }
+  @media screen and (max-width: 555px) {
+    #phone-mobile {
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-align: center;
+          align-items: center;
+      -ms-flex-pack: center;
+          justify-content: center; } }

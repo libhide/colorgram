@@ -23,7 +23,7 @@ main {
   padding: 0 20px;
 
   @media screen and (max-width: 555px) {
-    // display: block;
+    display: block;
   }
 }
 
@@ -35,7 +35,8 @@ main {
   margin-top: -60px;
 
   @media screen and (max-width: 555px) {
-    margin-top: 20px;
+    height: auto;
+    margin: -20px 0 40px;
     display: block;
   }
 }
@@ -48,7 +49,7 @@ main {
   margin-left: 5%;
 
   @media screen and (max-width: 555px) {
-    margin: 110px 0 30px;
+    margin-top: 50px;
     width: 100%;
   }
 }
@@ -140,5 +141,29 @@ footer {
         text-decoration: underline;
       }
     }
+
+    @media screen and (max-width: 555px) {
+      position: static;
+      text-align: center;
+      left: auto;
+      bottom: auto;
+      margin: 0;
+      margin-bottom: 20px;
+    }
+  }
+}
+
+#phone-mobile {
+  display: none;
+  margin: 0 auto;
+
+  img {
+    width: 300px !important;
+  }
+
+  @media screen and (max-width: 555px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
