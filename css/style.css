@@ -493,16 +493,13 @@ footer p {
     footer p {
       position: static;
       text-align: center;
-      left: auto;
-      bottom: auto;
-      margin: 0;
-      margin-bottom: 20px; } }
+      margin: 180px 0 20px; } }
 
 #phone-mobile {
   display: none;
   margin: 0 auto; }
   #phone-mobile img {
-    width: 300px !important; }
+    width: 320px !important; }
   @media screen and (max-width: 555px) {
     #phone-mobile {
       display: -ms-flexbox;
