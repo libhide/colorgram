@@ -1,11 +1,28 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
+    ext {
+        kotlin_version = '1.2.30'
+
+        compile_sdk = 28
+        min_sdk = 16
+        target_sdk = 28
+
+        app_id = 'com.ratik.colorgram'
+        version_code = 2
+        version_name = '1.1'
+
+        support_library = '28.0.0'
+        android_plugin = '3.1.4'
+        butterknife = "8.8.1"
+    }
+
     repositories {
         jcenter()
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.2'
+        classpath "com.android.tools.build:gradle:$android_plugin"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -15,6 +32,7 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        google()
     }
 }
 
