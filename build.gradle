@@ -2,7 +2,7 @@
 
 buildscript {
     ext {
-        kotlin_version = '1.2.30'
+        kotlin_version = '1.2.71'
 
         compile_sdk = 28
         min_sdk = 16
@@ -23,6 +23,7 @@ buildscript {
     }
     dependencies {
         classpath "com.android.tools.build:gradle:$android_plugin"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -33,6 +34,7 @@ allprojects {
     repositories {
         jcenter()
         google()
+        mavenCentral()
     }
 }
 
