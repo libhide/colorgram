@@ -27,7 +27,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="0.9"
-            android:max="255" />
+            android:max="255"
+            android:tag="red" />
 
     </LinearLayout>
 
@@ -51,7 +52,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="0.9"
-            android:max="255" />
+            android:max="255"
+            android:tag="green" />
 
     </LinearLayout>
 
@@ -72,6 +74,7 @@
         <android.support.v7.widget.AppCompatSeekBar
             android:id="@+id/blueSlider"
             android:layout_width="0dp"
+            android:tag="blue"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="0.9"

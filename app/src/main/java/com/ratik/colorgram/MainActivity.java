@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements OnColorChangeList
 
     private void init() {
         fragmentManager = getSupportFragmentManager();
-        colorPickerFragment = ColorPickerFragment.getInstance();
+        colorPickerFragment = ColorPickerFragment.Companion.newInstance();
 
         // Add visual treat for L+ devices
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
