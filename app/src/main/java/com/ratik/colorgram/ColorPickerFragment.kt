@@ -1,9 +1,7 @@
 package com.ratik.colorgram
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,13 +12,6 @@ import kotlinx.android.synthetic.main.fragment_color_select.view.*
 /**
  * Created by Ratik on 05/07/17.
  */
-
-const val PREF_RED = "red"
-const val PREF_BLUE = "blue"
-const val PREF_GREEN = "green"
-const val APP_RED = 66
-const val APP_GREEN = 134
-const val APP_BLUE = 245
 
 class ColorPickerFragment : Fragment() {
     lateinit var colorChangeListener: OnColorChangeListener
@@ -57,8 +48,6 @@ class ColorPickerFragment : Fragment() {
     lateinit var greenSeekBar: SeekBar
     lateinit var blueSeekBar: SeekBar
 
-    lateinit var sharedPrefs: SharedPreferences
-
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         try {
@@ -70,7 +59,6 @@ class ColorPickerFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_color_select, container, false)
-        sharedPrefs = PreferenceManager.getDefaultSharedPreferences(activity)
 
         redSeekBar = rootView.redSlider
         greenSeekBar = rootView.greenSlider
@@ -83,34 +71,23 @@ class ColorPickerFragment : Fragment() {
         return rootView
     }
 
-    override fun onPause() {
-        super.onPause()
-
-        Thread {
-            val editor = sharedPrefs.edit()
-            editor.putInt(PREF_RED, red)
-            editor.putInt(PREF_GREEN, green)
-            editor.putInt(PREF_BLUE, blue)
-            editor.apply()
-        }
-    }
-
     override fun onResume() {
         super.onResume()
 
-        Thread {
-            red = sharedPrefs.getInt(PREF_RED, APP_RED)
-            green = sharedPrefs.getInt(PREF_GREEN, APP_GREEN)
-            blue = sharedPrefs.getInt(PREF_BLUE, APP_BLUE)
-            redSeekBar.progress = red
-            greenSeekBar.progress = green
-            blueSeekBar.progress = blue
-        }
+        red = arguments?.getInt(PREF_RED) ?: APP_RED
+        green = arguments?.getInt(PREF_GREEN) ?: APP_GREEN
+        blue = arguments?.getInt(PREF_BLUE) ?: APP_BLUE
+
+        redSeekBar.progress = red
+        greenSeekBar.progress = green
+        blueSeekBar.progress = blue
     }
 
     companion object {
-        fun newInstance(): ColorPickerFragment {
-            return ColorPickerFragment()
+        fun newInstance(args: Bundle): ColorPickerFragment {
+            val fragment = ColorPickerFragment()
+            fragment.arguments = args
+            return fragment
         }
     }
 }
