@@ -36,4 +36,5 @@ dependencies {
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife"
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation 'junit:junit:4.12'
 }

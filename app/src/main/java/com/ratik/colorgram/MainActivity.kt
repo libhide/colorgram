@@ -122,13 +122,13 @@ class MainActivity : AppCompatActivity(), OnColorChangeListener {
         saveButton.setImageDrawable(saveDrawable)
     }
 
-    // Logic: https://stackoverflow.com/a/9780689/3150771
+
     private fun shouldSaveButtonBeWhite(): Boolean {
         val y = 0.2126 * red + 0.7152 * green + 0.0722 * blue
         return y < 200
     }
 
-    fun saveColorImage() {
+    fun saveColorImage(view: View) {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission
                         .WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             // Should we show an explanation?
