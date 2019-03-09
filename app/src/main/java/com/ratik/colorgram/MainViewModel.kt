@@ -18,4 +18,8 @@ class MainViewModel(private val colorRepository: ColorRepository) : ViewModel() 
     fun observeSelectedColor(): LiveData<GramColor> {
         return selectedColor
     }
+
+    fun saveColor() {
+        GlobalScope.launch { colorRepository.saveColor(selectedColor.value!!) }
+    }
 }

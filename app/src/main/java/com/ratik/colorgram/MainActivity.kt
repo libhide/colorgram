@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity(), OnColorChangeListener {
 
     private var colorPickerFragment: ColorPickerFragment? = null
 
-    val mainViewModel: MainViewModel by viewModel()
+    private val mainViewModel: MainViewModel by viewModel()
     private var selectedColor: GramColor? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -174,6 +174,11 @@ class MainActivity : AppCompatActivity(), OnColorChangeListener {
         } else {
             super.onBackPressed()
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mainViewModel.saveColor()
     }
 
     companion object {
