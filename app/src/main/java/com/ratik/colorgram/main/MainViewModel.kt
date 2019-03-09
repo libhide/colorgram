@@ -16,8 +16,20 @@ class MainViewModel(private val colorRepository: ColorRepository) : ViewModel() 
         GlobalScope.launch { selectedColor.postValue(colorRepository.getColor()) }
     }
 
-    fun observeSelectedColor(): LiveData<GramColor> {
+    fun selectedColor(): LiveData<GramColor> {
         return selectedColor
+    }
+
+    fun setRed(red: Int) {
+        selectedColor.value = GramColor(red, selectedColor.value!!.green, selectedColor.value!!.blue)
+    }
+
+    fun setGreen(green: Int) {
+        selectedColor.value = GramColor(selectedColor.value!!.red, green, selectedColor.value!!.blue)
+    }
+
+    fun setBlue(blue: Int) {
+        selectedColor.value = GramColor(selectedColor.value!!.red, selectedColor.value!!.green, blue)
     }
 
     fun saveColor() {

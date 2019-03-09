@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity(), OnColorChangeListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initLayout()
-        mainViewModel.observeSelectedColor()
+        mainViewModel.selectedColor()
                 .observe(this, Observer { updateView(it) })
     }
 
@@ -82,6 +82,10 @@ class MainActivity : AppCompatActivity(), OnColorChangeListener {
         saveButton.setImageDrawable(saveDrawable)
     }
 
+    override fun redChanged(red: Int) = mainViewModel.setRed(red)
+    override fun greenChanged(green: Int) = mainViewModel.setGreen(green)
+    override fun blueChanged(blue: Int) = mainViewModel.setBlue(blue)
+
     private fun hideSliders() {
         supportFragmentManager
                 .beginTransaction()
@@ -109,10 +113,6 @@ class MainActivity : AppCompatActivity(), OnColorChangeListener {
 
         // hide tooltip
         tooltipTextView!!.visibility = View.INVISIBLE
-    }
-
-    override fun colorChanged(red: Int, green: Int, blue: Int) {
-        mainViewModel.selectedColor.value = GramColor(red, green, blue)
     }
 
     fun saveColorImage(view: View) {

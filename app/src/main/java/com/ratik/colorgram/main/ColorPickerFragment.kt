@@ -10,40 +10,20 @@ import androidx.fragment.app.Fragment
 import com.ratik.colorgram.*
 import kotlinx.android.synthetic.main.fragment_color_select.*
 
-/**
- * Created by Ratik on 05/07/17.
- */
-
 class ColorPickerFragment : Fragment() {
     lateinit var colorChangeListener: OnColorChangeListener
 
     private val onSeekBarChangeListener = object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
                 when (seekBar.tag) {
-                    "red" -> red = i
-                    "green" -> green = i
-                    "blue" -> blue = i
-                    else -> {
-                        red = APP_RED
-                        green = APP_GREEN
-                        blue = APP_BLUE
-                    }
+                    "red" -> colorChangeListener.redChanged(i)
+                    "green" -> colorChangeListener.greenChanged(i)
+                    "blue" -> colorChangeListener.blueChanged(i)
                 }
-                colorChangeListener.colorChanged(red, green, blue)
             }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-
-            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         }
-
-    private var red: Int = 0
-    private var green: Int = 0
-    private var blue: Int = 0
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -59,21 +39,17 @@ class ColorPickerFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        mutableListOf(redSlider, greenSlider, blueSlider).forEach {
-            it.setOnSeekBarChangeListener(onSeekBarChangeListener)
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        red = arguments?.getInt(PREF_RED) ?: APP_RED
-        green = arguments?.getInt(PREF_GREEN) ?: APP_GREEN
-        blue = arguments?.getInt(PREF_BLUE) ?: APP_BLUE
+        val red = arguments?.getInt(PREF_RED) ?: APP_RED
+        val green = arguments?.getInt(PREF_GREEN) ?: APP_GREEN
+        val blue = arguments?.getInt(PREF_BLUE) ?: APP_BLUE
 
         redSlider.progress = red
         greenSlider.progress = green
         blueSlider.progress = blue
+
+        mutableListOf(redSlider, greenSlider, blueSlider).forEach {
+            it.setOnSeekBarChangeListener(onSeekBarChangeListener)
+        }
     }
 
     companion object {

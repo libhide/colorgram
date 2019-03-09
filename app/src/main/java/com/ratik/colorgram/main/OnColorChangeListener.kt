@@ -5,5 +5,7 @@ package com.ratik.colorgram.main
  */
 
 interface OnColorChangeListener {
-    fun colorChanged(red: Int, green: Int, blue: Int)
+    fun redChanged(red: Int)
+    fun greenChanged(green: Int)
+    fun blueChanged(blue: Int)
 }
