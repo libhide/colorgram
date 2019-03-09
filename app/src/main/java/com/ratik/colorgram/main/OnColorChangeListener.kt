@@ -1,4 +1,4 @@
-package com.ratik.colorgram
+package com.ratik.colorgram.main
 
 /**
  * Created by Ratik on 05/07/17.

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/appColor"
-    tools:context="com.ratik.colorgram.MainActivity">
+    tools:context="com.ratik.colorgram.main.MainActivity">
 
     <ImageButton
         android:id="@+id/saveButton"

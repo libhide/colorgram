@@ -1,4 +1,4 @@
-package com.ratik.colorgram
+package com.ratik.colorgram.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -1,4 +1,4 @@
-package com.ratik.colorgram
+package com.ratik.colorgram.main
 
 import android.graphics.Color
 import android.graphics.PorterDuff
@@ -11,6 +11,10 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import com.ratik.colorgram.PREF_BLUE
+import com.ratik.colorgram.PREF_GREEN
+import com.ratik.colorgram.PREF_RED
+import com.ratik.colorgram.R
 import com.ratik.colorgram.model.GramColor
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel

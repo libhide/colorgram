@@ -1,4 +1,4 @@
-package com.ratik.colorgram
+package com.ratik.colorgram.main
 
 import android.content.Context
 import android.os.Bundle
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.fragment.app.Fragment
+import com.ratik.colorgram.*
 import kotlinx.android.synthetic.main.fragment_color_select.*
 
 /**
