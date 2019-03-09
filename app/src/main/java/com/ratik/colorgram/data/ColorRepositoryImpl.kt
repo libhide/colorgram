@@ -1,7 +1,7 @@
 package com.ratik.colorgram.data
 
 import com.ratik.colorgram.*
-import com.ratik.colorgram.model.GramColor
+import com.ratik.colorgram.ui.model.GramColor
 
 class ColorRepositoryImpl(private val localStorage: LocalStorage) : ColorRepository {
 

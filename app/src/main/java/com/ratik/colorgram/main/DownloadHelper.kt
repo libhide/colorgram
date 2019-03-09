@@ -8,7 +8,7 @@ import android.net.Uri
 import android.os.Environment
 import android.util.Log
 import com.ratik.colorgram.R
-import com.ratik.colorgram.model.GramColor
+import com.ratik.colorgram.ui.model.GramColor
 import java.io.File
 import java.io.FileOutputStream
 

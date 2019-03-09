@@ -1,4 +1,4 @@
-package com.ratik.colorgram.splash
+package com.ratik.colorgram.ui.splash
 
 import android.content.Intent
 import android.os.Bundle

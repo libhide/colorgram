@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ratik.colorgram.data.ColorRepository
-import com.ratik.colorgram.model.GramColor
+import com.ratik.colorgram.ui.model.GramColor
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
