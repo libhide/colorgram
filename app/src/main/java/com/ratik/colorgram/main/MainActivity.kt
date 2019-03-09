@@ -1,5 +1,7 @@
 package com.ratik.colorgram.main
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Build
@@ -10,6 +12,8 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.ratik.colorgram.PREF_BLUE
 import com.ratik.colorgram.PREF_GREEN
@@ -17,13 +21,17 @@ import com.ratik.colorgram.PREF_RED
 import com.ratik.colorgram.R
 import com.ratik.colorgram.model.GramColor
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainActivity : AppCompatActivity(), OnColorChangeListener {
-    val PERMISSION_REQUEST_WRITE_STORAGE = 1
+private const val PERMISSION_REQUEST_WRITE_STORAGE = 1
 
+class MainActivity : AppCompatActivity(), OnColorChangeListener {
     private val mainViewModel: MainViewModel by viewModel()
     private var colorPickerFragment: ColorPickerFragment? = null
+    private val downloadHelper: DownloadHelper by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,76 +106,45 @@ class MainActivity : AppCompatActivity(), OnColorChangeListener {
     }
 
     fun saveColorImage(view: View) {
-//        if (ContextCompat.checkSelfPermission(this, Manifest.permission
-//                        .WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-//            // Should we show an explanation?
-//            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-//                            Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-//                Toast.makeText(this, "Permission denied. Can't save the color image.",
-//                        Toast.LENGTH_LONG).show()
-//            } else {
-//                // Request the permission.
-//                ActivityCompat.requestPermissions(this,
-//                        arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-//                        MY_PERMISSIONS_REQUEST_WRITE_STORAGE)
-//            }
-//        } else {
-//            saveColor()
-//        }
-        Toast.makeText(this, "Feature coming soon", Toast.LENGTH_LONG).show()
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                showPermissionDeniedToast()
+            } else {
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), PERMISSION_REQUEST_WRITE_STORAGE)
+            }
+        } else {
+            downloadColor()
+        }
     }
 
-//    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>,
-//                                            grantResults: IntArray) {
-//        when (requestCode) {
-//            MY_PERMISSIONS_REQUEST_WRITE_STORAGE -> {
-//                // If request is cancelled, the result arrays are empty.
-//                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    // permission was granted, yay!
-//                    saveColor()
-//                } else {
-//                    // permission denied, boo!
-//                    Toast.makeText(this, "Permission denied. Can't save the color image.",
-//                            Toast.LENGTH_LONG).show()
-//                }
-//            }
-//        }
-//    }
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        when (requestCode) {
+            PERMISSION_REQUEST_WRITE_STORAGE -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    downloadColor()
+                } else {
+                    showPermissionDeniedToast()
+                }
+            }
+        }
+    }
 
-//    private fun saveColor() {
-//        val bitmap = Bitmap.createBitmap(1080, 1920, Bitmap.Config.ARGB_8888)
-//        val canvas = Canvas(bitmap)
-//        canvas.drawARGB(255, red, green, blue)
-//
-//        val filename = String.format("%d_%d_%d", red, green, blue) + ".jpg"
-//        val sdCard = Environment.getExternalStorageDirectory().absolutePath
-//        val destDir = File(sdCard + "/" + getString(R.string.app_name))
-//        destDir.mkdirs()
-//        val file = File(destDir, filename)
-//
-//        try {
-//            val out = FileOutputStream(file)
-//            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
-//            out.flush()
-//            out.close()
-//            Toast.makeText(this, "Saved! You can now continue " + "working on that Instagram story!", Toast.LENGTH_SHORT).show()
-//        } catch (e: Exception) {
-//            Log.e(TAG, "Error: " + e.message)
-//        }
-//
-//        // make sure the image appears in the gallery
-//        val scanFileIntent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
-//                Uri.fromFile(file))
-//        sendBroadcast(scanFileIntent)
-//    }
+    private fun showPermissionDeniedToast() {
+        Toast.makeText(this, "Permission denied. Can't save the color image.", Toast.LENGTH_LONG).show()
+    }
 
-    override fun onBackPressed() {
-        if (mainViewModel.slidersAreVisible) hideSliders()
-        else super.onBackPressed()
+    private fun downloadColor() {
+        GlobalScope.launch { downloadHelper.downloadColor(mainViewModel.selectedColor.value!!) }
+        Toast.makeText(this, "Saved! You can now continue working on that Instagram story!", Toast.LENGTH_SHORT).show()
     }
 
     override fun onPause() {
         super.onPause()
         mainViewModel.saveColor()
+    }
+
+    override fun onBackPressed() {
+        if (mainViewModel.slidersAreVisible) hideSliders()
+        else super.onBackPressed()
     }
 }
