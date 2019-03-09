@@ -16,13 +16,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity(), OnColorChangeListener {
-
     val PERMISSION_REQUEST_WRITE_STORAGE = 1
 
     private val mainViewModel: MainViewModel by viewModel()
-
-    private var isFirstRun: Boolean = false
-    private var slidersAreVisible = false
     private var colorPickerFragment: ColorPickerFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,16 +38,14 @@ class MainActivity : AppCompatActivity(), OnColorChangeListener {
         }
 
         mainLayout.setOnLongClickListener {
-            if (!slidersAreVisible) {
+            if (!mainViewModel.slidersAreVisible)
                 showSliders()
-            }
             true
         }
 
         mainLayout.setOnClickListener {
-            if (slidersAreVisible) {
+            if (mainViewModel.slidersAreVisible)
                 hideSliders()
-            }
         }
     }
 
@@ -73,7 +67,7 @@ class MainActivity : AppCompatActivity(), OnColorChangeListener {
                 .remove(colorPickerFragment!!)
                 .commit()
         colorPickerFragment = null
-        slidersAreVisible = false
+        mainViewModel.slidersAreVisible = false
     }
 
     private fun showSliders() {
@@ -89,7 +83,7 @@ class MainActivity : AppCompatActivity(), OnColorChangeListener {
                 .replace(R.id.slidersContainer, colorPickerFragment!!)
                 .commit()
 
-        slidersAreVisible = true
+        mainViewModel.slidersAreVisible = true
 
         // hide tooltip
         tooltipTextView!!.visibility = View.INVISIBLE
@@ -164,7 +158,7 @@ class MainActivity : AppCompatActivity(), OnColorChangeListener {
 //    }
 
     override fun onBackPressed() {
-        if (slidersAreVisible) hideSliders()
+        if (mainViewModel.slidersAreVisible) hideSliders()
         else super.onBackPressed()
     }
 

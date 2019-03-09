@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(private val colorRepository: ColorRepository) : ViewModel() {
     var selectedColor = MutableLiveData<GramColor>()
+    var slidersAreVisible = false
 
     init {
         GlobalScope.launch { selectedColor.postValue(colorRepository.getColor()) }
