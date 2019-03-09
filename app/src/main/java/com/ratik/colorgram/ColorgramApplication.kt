@@ -7,6 +7,6 @@ class ColorgramApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        startKoin(this, listOf())
+        startKoin(this, listOf(appModule))
     }
 }

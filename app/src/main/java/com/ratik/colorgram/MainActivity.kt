@@ -11,18 +11,19 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.ratik.colorgram.model.GramColor
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity(), OnColorChangeListener {
 
     private var isFirstRun: Boolean = false
+
     private var slidersAreVisible = false
 
     private var colorPickerFragment: ColorPickerFragment? = null
 
-    private lateinit var mainViewModel: MainViewModel
+    val mainViewModel: MainViewModel by viewModel()
     private var selectedColor: GramColor? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +32,6 @@ class MainActivity : AppCompatActivity(), OnColorChangeListener {
 
         initLayout()
 
-        mainViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         mainViewModel.observeSelectedColor().observe(this, Observer { updateView(it) })
 
         mainLayout.setOnLongClickListener {
