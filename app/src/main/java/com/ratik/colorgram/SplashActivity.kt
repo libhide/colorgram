@@ -3,7 +3,7 @@ package com.ratik.colorgram
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 
 private const val SPLASH_DURATION: Long = 1500
 

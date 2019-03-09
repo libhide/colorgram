@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.fragment_color_select.view.*
+import kotlinx.android.synthetic.main.fragment_color_select.*
 
 /**
  * Created by Ratik on 05/07/17.
@@ -44,10 +44,6 @@ class ColorPickerFragment : Fragment() {
     private var green: Int = 0
     private var blue: Int = 0
 
-    lateinit var redSeekBar: SeekBar
-    lateinit var greenSeekBar: SeekBar
-    lateinit var blueSeekBar: SeekBar
-
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         try {
@@ -58,17 +54,13 @@ class ColorPickerFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView = inflater.inflate(R.layout.fragment_color_select, container, false)
+        return inflater.inflate(R.layout.fragment_color_select, container, false)
+    }
 
-        redSeekBar = rootView.redSlider
-        greenSeekBar = rootView.greenSlider
-        blueSeekBar = rootView.blueSlider
-
-        mutableListOf(redSeekBar, greenSeekBar, blueSeekBar).forEach {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        mutableListOf(redSlider, greenSlider, blueSlider).forEach {
             it.setOnSeekBarChangeListener(onSeekBarChangeListener)
         }
-
-        return rootView
     }
 
     override fun onResume() {
@@ -78,9 +70,9 @@ class ColorPickerFragment : Fragment() {
         green = arguments?.getInt(PREF_GREEN) ?: APP_GREEN
         blue = arguments?.getInt(PREF_BLUE) ?: APP_BLUE
 
-        redSeekBar.progress = red
-        greenSeekBar.progress = green
-        blueSeekBar.progress = blue
+        redSlider.progress = red
+        greenSlider.progress = green
+        blueSlider.progress = blue
     }
 
     companion object {
