@@ -27,8 +27,8 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "com.android.support:appcompat-v7:$support_library"
-    implementation "com.android.support:design:$support_library"
+    implementation "androidx.appcompat:appcompat:$support_library"
+    implementation "com.google.android.material:material:$support_library"
 
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
 

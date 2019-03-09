@@ -2,11 +2,11 @@ package com.ratik.colorgram
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_color_select.view.*
 
 /**
