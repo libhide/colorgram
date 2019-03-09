@@ -17,22 +17,29 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity(), OnColorChangeListener {
 
-    private var isFirstRun: Boolean = false
-
-    private var slidersAreVisible = false
-
-    private var colorPickerFragment: ColorPickerFragment? = null
+    val PERMISSION_REQUEST_WRITE_STORAGE = 1
 
     private val mainViewModel: MainViewModel by viewModel()
-    private var selectedColor: GramColor? = null
+
+    private var isFirstRun: Boolean = false
+    private var slidersAreVisible = false
+    private var colorPickerFragment: ColorPickerFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         initLayout()
+        mainViewModel.observeSelectedColor()
+                .observe(this, Observer { updateView(it) })
+    }
 
-        mainViewModel.observeSelectedColor().observe(this, Observer { updateView(it) })
+    private fun initLayout() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.enterTransition = Slide(Gravity.END)
+            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        } else {
+            setTheme(R.style.AppTheme_Fullscreen)
+        }
 
         mainLayout.setOnLongClickListener {
             if (!slidersAreVisible) {
@@ -48,19 +55,7 @@ class MainActivity : AppCompatActivity(), OnColorChangeListener {
         }
     }
 
-    private fun initLayout() {
-        // Add visual treat for L+ devices
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.enterTransition = Slide(Gravity.END)
-            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        } else {
-            setTheme(R.style.AppTheme_Fullscreen)
-        }
-    }
-
     private fun updateView(color: GramColor) {
-        selectedColor = color
-
         mainLayout.setBackgroundColor(Color.rgb(color.red, color.green, color.blue))
         val saveDrawable = saveButton.drawable
         if (color.shouldOverlayColorBeWhite()) {
@@ -83,9 +78,9 @@ class MainActivity : AppCompatActivity(), OnColorChangeListener {
 
     private fun showSliders() {
         val colorArgs = Bundle()
-        colorArgs.putInt(PREF_RED, selectedColor!!.red)
-        colorArgs.putInt(PREF_GREEN, selectedColor!!.green)
-        colorArgs.putInt(PREF_BLUE, selectedColor!!.blue)
+        colorArgs.putInt(PREF_RED, mainViewModel.selectedColor.value!!.red)
+        colorArgs.putInt(PREF_GREEN, mainViewModel.selectedColor.value!!.green)
+        colorArgs.putInt(PREF_BLUE, mainViewModel.selectedColor.value!!.blue)
         colorPickerFragment = ColorPickerFragment.newInstance(colorArgs)
 
         supportFragmentManager
@@ -169,20 +164,12 @@ class MainActivity : AppCompatActivity(), OnColorChangeListener {
 //    }
 
     override fun onBackPressed() {
-        if (slidersAreVisible) {
-            hideSliders()
-        } else {
-            super.onBackPressed()
-        }
+        if (slidersAreVisible) hideSliders()
+        else super.onBackPressed()
     }
 
     override fun onPause() {
         super.onPause()
         mainViewModel.saveColor()
-    }
-
-    companion object {
-        private val TAG = MainActivity::class.java.simpleName
-        private val MY_PERMISSIONS_REQUEST_WRITE_STORAGE = 1
     }
 }
