@@ -3,7 +3,7 @@ package com.ratik.colorgram.data
 import com.ratik.colorgram.*
 import com.ratik.colorgram.model.GramColor
 
-class ColorRepositoryImpl(val localStorage: LocalStorage) : ColorRepository {
+class ColorRepositoryImpl(private val localStorage: LocalStorage) : ColorRepository {
 
     override fun saveColor(color: GramColor) {
         localStorage.putInt(PREF_RED, color.red)

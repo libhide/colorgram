@@ -2,10 +2,7 @@ package com.ratik.colorgram
 
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import com.ratik.colorgram.data.ColorRepository
-import com.ratik.colorgram.data.ColorRepositoryImpl
-import com.ratik.colorgram.data.LocalStorage
-import com.ratik.colorgram.data.SharedPrefs
+import com.ratik.colorgram.data.*
 import com.ratik.colorgram.main.DownloadHelper
 import com.ratik.colorgram.main.MainViewModel
 import org.koin.android.ext.koin.androidContext
@@ -19,6 +16,7 @@ val appModule = module {
 
     single<LocalStorage> { SharedPrefs(get()) }
     single<ColorRepository>{ ColorRepositoryImpl(get()) }
+    single<PrefRepository>{ PrefRepositoryImpl(get()) }
 
     viewModel { MainViewModel(get()) }
 }

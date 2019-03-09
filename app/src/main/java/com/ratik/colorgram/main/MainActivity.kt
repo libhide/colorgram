@@ -19,6 +19,7 @@ import com.ratik.colorgram.PREF_BLUE
 import com.ratik.colorgram.PREF_GREEN
 import com.ratik.colorgram.PREF_RED
 import com.ratik.colorgram.R
+import com.ratik.colorgram.data.PrefRepository
 import com.ratik.colorgram.model.GramColor
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.GlobalScope
@@ -32,6 +33,7 @@ class MainActivity : AppCompatActivity(), OnColorChangeListener {
     private val mainViewModel: MainViewModel by viewModel()
     private var colorPickerFragment: ColorPickerFragment? = null
     private val downloadHelper: DownloadHelper by inject()
+    private val prefRepository: PrefRepository by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +60,14 @@ class MainActivity : AppCompatActivity(), OnColorChangeListener {
         mainLayout.setOnClickListener {
             if (mainViewModel.slidersAreVisible)
                 hideSliders()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (prefRepository.isFirstRun()) {
+            tooltipTextView.visibility = View.VISIBLE
+            prefRepository.firstRunDone()
         }
     }
 
