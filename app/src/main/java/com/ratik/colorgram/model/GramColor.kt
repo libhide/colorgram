@@ -1,4 +1,4 @@
-package com.ratik.colorgram.ui.model
+package com.ratik.colorgram.model
 
 import com.ratik.colorgram.APP_BLUE
 import com.ratik.colorgram.APP_GREEN

@@ -1,6 +1,6 @@
 package com.ratik.colorgram.data
 
-import com.ratik.colorgram.ui.model.GramColor
+import com.ratik.colorgram.model.GramColor
 
 interface ColorRepository {
     fun saveColor(color: GramColor)

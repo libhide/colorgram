@@ -1,4 +1,4 @@
-package com.ratik.colorgram.main
+package com.ratik.colorgram.ui.main
 
 import android.content.Context
 import android.os.Bundle

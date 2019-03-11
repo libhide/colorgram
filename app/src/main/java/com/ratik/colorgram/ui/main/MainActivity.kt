@@ -1,4 +1,4 @@
-package com.ratik.colorgram.main
+package com.ratik.colorgram.ui.main
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -20,7 +20,7 @@ import com.ratik.colorgram.PREF_GREEN
 import com.ratik.colorgram.PREF_RED
 import com.ratik.colorgram.R
 import com.ratik.colorgram.data.PrefRepository
-import com.ratik.colorgram.ui.model.GramColor
+import com.ratik.colorgram.model.GramColor
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
