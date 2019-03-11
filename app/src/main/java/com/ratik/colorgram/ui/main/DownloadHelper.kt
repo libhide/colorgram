@@ -6,9 +6,11 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.net.Uri
 import android.os.Environment
-import android.util.Log
 import com.ratik.colorgram.R
 import com.ratik.colorgram.model.GramColor
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import java.io.File
 import java.io.FileOutputStream
 
@@ -35,22 +37,25 @@ class DownloadHelper(private val context: Context) {
         return result
     }
 
-    fun downloadColor(color: GramColor) {
-        val paintedBitmap = getPaintedBitmap(color)
-        val filename = "${color.red}_${color.green}_${color.blue}.jpg"
-        val colorDownloadFile = File(createAndGetDownloadDestination(context), filename)
-        try {
-            val out = FileOutputStream(colorDownloadFile)
-            paintedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
-            out.flush()
-            out.close()
-            broadcastSaveIntent(colorDownloadFile)
-        } catch (e: Exception) {
-            Log.e(TAG, e.message)
+    fun downloadColor(color: GramColor): Deferred<File> {
+        return GlobalScope.async {
+            val paintedBitmap = getPaintedBitmap(color)
+            val filename = "${color.red}_${color.green}_${color.blue}.jpg"
+            val colorDownloadFile = File(createAndGetDownloadDestination(context), filename)
+
+            try {
+                val out = FileOutputStream(colorDownloadFile)
+                paintedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+                out.flush()
+                out.close()
+                colorDownloadFile
+            } catch (e: Exception) {
+                throw e
+            }
         }
     }
 
-    private fun broadcastSaveIntent(savedFile: File) {
+    public fun broadcastSaveIntent(savedFile: File) {
         val scanFileIntent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(savedFile))
         context.sendBroadcast(scanFileIntent)
     }

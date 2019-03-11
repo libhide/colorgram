@@ -22,8 +22,6 @@ import com.ratik.colorgram.R
 import com.ratik.colorgram.data.PrefRepository
 import com.ratik.colorgram.model.GramColor
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -32,7 +30,6 @@ private const val PERMISSION_REQUEST_WRITE_STORAGE = 1
 class MainActivity : AppCompatActivity(), OnColorChangeListener {
     private val mainViewModel: MainViewModel by viewModel()
     private var colorPickerFragment: ColorPickerFragment? = null
-    private val downloadHelper: DownloadHelper by inject()
     private val prefRepository: PrefRepository by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -144,7 +141,7 @@ class MainActivity : AppCompatActivity(), OnColorChangeListener {
     }
 
     private fun downloadColor() {
-        GlobalScope.launch { downloadHelper.downloadColor(mainViewModel.selectedColor.value!!) }
+        mainViewModel.downloadColor()
         Toast.makeText(this, "Saved! You can now continue working on that Instagram story!", Toast.LENGTH_SHORT).show()
     }
 

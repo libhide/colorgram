@@ -18,5 +18,5 @@ val appModule = module {
     single<ColorRepository>{ ColorRepositoryImpl(get()) }
     single<PrefRepository>{ PrefRepositoryImpl(get()) }
 
-    viewModel { MainViewModel(get()) }
+    viewModel { MainViewModel(get(), get()) }
 }

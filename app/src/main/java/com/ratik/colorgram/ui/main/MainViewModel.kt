@@ -10,7 +10,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val colorRepository: ColorRepository) : ViewModel() {
+class MainViewModel(private val colorRepository: ColorRepository,
+                    private val downloadHelper: DownloadHelper) : ViewModel() {
     private val viewModelJob = Job()
     private val backgroundScope = CoroutineScope(Dispatchers.IO + viewModelJob)
 
@@ -43,6 +44,13 @@ class MainViewModel(private val colorRepository: ColorRepository) : ViewModel() 
     fun saveColor() {
         backgroundScope.launch {
             colorRepository.saveColor(selectedColor.value!!).await()
+        }
+    }
+
+    fun downloadColor() {
+        backgroundScope.launch {
+            val downloadedFile = downloadHelper.downloadColor(selectedColor.value!!).await()
+            downloadHelper.broadcastSaveIntent(downloadedFile)
         }
     }
 
