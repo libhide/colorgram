@@ -5,15 +5,23 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ratik.colorgram.data.ColorRepository
 import com.ratik.colorgram.model.GramColor
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val colorRepository: ColorRepository) : ViewModel() {
+    private val viewModelJob = Job()
+    private val backgroundScope = CoroutineScope(Dispatchers.IO + viewModelJob)
+
     var selectedColor = MutableLiveData<GramColor>()
     var slidersAreVisible = false
 
     init {
-        GlobalScope.launch { selectedColor.postValue(colorRepository.getColor()) }
+        backgroundScope.launch {
+            val color = colorRepository.getColor().await()
+            selectedColor.postValue(color)
+        }
     }
 
     fun selectedColor(): LiveData<GramColor> {
@@ -33,6 +41,13 @@ class MainViewModel(private val colorRepository: ColorRepository) : ViewModel() 
     }
 
     fun saveColor() {
-        GlobalScope.launch { colorRepository.saveColor(selectedColor.value!!) }
+        backgroundScope.launch {
+            colorRepository.saveColor(selectedColor.value!!).await()
+        }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
     }
 }
