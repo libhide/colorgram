@@ -1,7 +1,9 @@
 # Colorgram
 Colorgram is tiny app I built over a weekend to fix a itch particular itch of mine.
 
-## The Itch
+## Story
+
+### The Itch
 
 Instagram for the longest time did not have a way to fill a "story" slide with a solid color. I wanted to do this on my personal Instagram to make stories more engaging because hey! FUN! 
 
