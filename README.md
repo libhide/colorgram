@@ -2,7 +2,7 @@
 
 <img src="https://github.com/libhide/colorgram/blob/master/art/logo.png" alt="Colorgram Branding">
 
-Colorgram is tiny app I built over a weekend to fix a itch particular itch of mine.
+Colorgram is tiny app I built over a weekend to fix a particular itch of mine.
 
 ## Story
 
