@@ -1,5 +1,6 @@
 package com.ratik.colorgram.ui.main
 
+import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -25,12 +26,12 @@ class ColorPickerFragment : Fragment() {
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         }
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         try {
             colorChangeListener = (context as OnColorChangeListener?)!!
         } catch (e: ClassCastException) {
-            throw ClassCastException("${context!!} must implement ${ColorPickerFragment::class.java.simpleName}")
+            throw ClassCastException("$context must implement ${ColorPickerFragment::class.java.simpleName}")
         }
     }
 
