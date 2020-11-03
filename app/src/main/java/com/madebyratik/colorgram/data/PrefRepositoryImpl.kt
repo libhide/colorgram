@@ -1,6 +1,6 @@
-package com.ratik.colorgram.data
+package com.madebyratik.colorgram.data
 
-import com.ratik.colorgram.FIRST_RUN
+import com.madebyratik.colorgram.FIRST_RUN
 
 class PrefRepositoryImpl(private val localStorage: LocalStorage) : PrefRepository {
 

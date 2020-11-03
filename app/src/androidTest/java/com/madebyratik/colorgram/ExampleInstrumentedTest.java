@@ -1,4 +1,4 @@
-package com.ratik.colorgram;
+package com.madebyratik.colorgram;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

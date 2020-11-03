@@ -1,6 +1,5 @@
-package com.ratik.colorgram.ui.main
+package com.madebyratik.colorgram.ui.main
 
-import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.fragment.app.Fragment
-import com.ratik.colorgram.*
+import com.madebyratik.colorgram.*
 import kotlinx.android.synthetic.main.fragment_color_select.*
 
 class ColorPickerFragment : Fragment() {

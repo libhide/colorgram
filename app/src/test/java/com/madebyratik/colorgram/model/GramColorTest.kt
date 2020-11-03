@@ -1,4 +1,4 @@
-package com.ratik.colorgram.model
+package com.madebyratik.colorgram.model
 
 import org.junit.Assert
 import org.junit.Test

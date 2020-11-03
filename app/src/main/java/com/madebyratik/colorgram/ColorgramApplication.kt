@@ -1,4 +1,4 @@
-package com.ratik.colorgram
+package com.madebyratik.colorgram
 
 import android.app.Application
 import org.koin.android.ext.android.startKoin

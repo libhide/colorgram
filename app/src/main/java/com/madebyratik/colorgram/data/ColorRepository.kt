@@ -1,6 +1,6 @@
-package com.ratik.colorgram.data
+package com.madebyratik.colorgram.data
 
-import com.ratik.colorgram.model.GramColor
+import com.madebyratik.colorgram.model.GramColor
 import kotlinx.coroutines.Deferred
 
 interface ColorRepository {

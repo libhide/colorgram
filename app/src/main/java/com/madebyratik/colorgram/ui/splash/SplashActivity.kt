@@ -1,11 +1,11 @@
-package com.ratik.colorgram.ui.splash
+package com.madebyratik.colorgram.ui.splash
 
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
-import com.ratik.colorgram.R
-import com.ratik.colorgram.ui.main.MainActivity
+import com.madebyratik.colorgram.R
+import com.madebyratik.colorgram.ui.main.MainActivity
 
 private const val SPLASH_DURATION: Long = 1500
 

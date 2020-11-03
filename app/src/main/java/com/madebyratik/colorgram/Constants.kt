@@ -1,4 +1,4 @@
-package com.ratik.colorgram
+package com.madebyratik.colorgram
 
 const val PREF_RED = "red"
 const val PREF_BLUE = "blue"

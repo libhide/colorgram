@@ -1,8 +1,8 @@
-package com.ratik.colorgram.model
+package com.madebyratik.colorgram.model
 
-import com.ratik.colorgram.APP_BLUE
-import com.ratik.colorgram.APP_GREEN
-import com.ratik.colorgram.APP_RED
+import com.madebyratik.colorgram.APP_BLUE
+import com.madebyratik.colorgram.APP_GREEN
+import com.madebyratik.colorgram.APP_RED
 
 data class GramColor(
         val red: Int = APP_RED,

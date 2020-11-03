@@ -1,10 +1,10 @@
-package com.ratik.colorgram.ui.main
+package com.madebyratik.colorgram.ui.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.ratik.colorgram.data.ColorRepository
-import com.ratik.colorgram.model.GramColor
+import com.madebyratik.colorgram.data.ColorRepository
+import com.madebyratik.colorgram.model.GramColor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

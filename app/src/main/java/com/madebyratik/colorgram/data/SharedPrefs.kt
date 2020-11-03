@@ -1,4 +1,4 @@
-package com.ratik.colorgram.data
+package com.madebyratik.colorgram.data
 
 import android.content.SharedPreferences
 

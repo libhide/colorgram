@@ -1,7 +1,7 @@
-package com.ratik.colorgram.data
+package com.madebyratik.colorgram.data
 
-import com.ratik.colorgram.*
-import com.ratik.colorgram.model.GramColor
+import com.madebyratik.colorgram.*
+import com.madebyratik.colorgram.model.GramColor
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async

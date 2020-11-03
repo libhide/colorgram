@@ -1,4 +1,4 @@
-package com.ratik.colorgram.ui.main
+package com.madebyratik.colorgram.ui.main
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -15,12 +15,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import com.ratik.colorgram.PREF_BLUE
-import com.ratik.colorgram.PREF_GREEN
-import com.ratik.colorgram.PREF_RED
-import com.ratik.colorgram.R
-import com.ratik.colorgram.data.PrefRepository
-import com.ratik.colorgram.model.GramColor
+import com.madebyratik.colorgram.PREF_BLUE
+import com.madebyratik.colorgram.PREF_GREEN
+import com.madebyratik.colorgram.PREF_RED
+import com.madebyratik.colorgram.R
+import com.madebyratik.colorgram.data.PrefRepository
+import com.madebyratik.colorgram.model.GramColor
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel

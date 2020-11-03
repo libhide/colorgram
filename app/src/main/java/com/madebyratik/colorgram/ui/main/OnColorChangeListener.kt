@@ -1,4 +1,4 @@
-package com.ratik.colorgram.ui.main
+package com.madebyratik.colorgram.ui.main
 
 /**
  * Created by Ratik on 05/07/17.

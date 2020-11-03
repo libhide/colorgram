@@ -1,4 +1,4 @@
-package com.ratik.colorgram.ui.main
+package com.madebyratik.colorgram.ui.main
 
 import android.content.Context
 import android.content.Intent
@@ -6,8 +6,8 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.net.Uri
 import android.os.Environment
-import com.ratik.colorgram.R
-import com.ratik.colorgram.model.GramColor
+import com.madebyratik.colorgram.R
+import com.madebyratik.colorgram.model.GramColor
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
