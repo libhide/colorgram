@@ -85,4 +85,4 @@ proguard/
 
 ## Files to keep local
 keystore.properties
-keystore-colorgram.jks
+keystore-colorgram
