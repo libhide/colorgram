@@ -81,3 +81,8 @@ proguard/
 
 ## Project Specific files
 /docs
+*.zip
+
+## Files to keep local
+keystore.properties
+keystore-colorgram.jks
