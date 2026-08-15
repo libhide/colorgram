@@ -3,80 +3,83 @@ package com.madebyratik.colorgram.ui.main
 import android.Manifest
 import android.content.pm.PackageManager
 import android.graphics.Color
-import android.graphics.PorterDuff
 import android.os.Build
 import android.os.Bundle
 import android.transition.Slide
 import android.view.Gravity
 import android.view.View
-import android.view.WindowManager
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
+import androidx.core.view.WindowCompat
 import com.madebyratik.colorgram.PREF_BLUE
 import com.madebyratik.colorgram.PREF_GREEN
 import com.madebyratik.colorgram.PREF_RED
 import com.madebyratik.colorgram.R
 import com.madebyratik.colorgram.data.PrefRepository
+import com.madebyratik.colorgram.databinding.ActivityMainBinding
 import com.madebyratik.colorgram.model.GramColor
-import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 private const val PERMISSION_REQUEST_WRITE_STORAGE = 1
 
 class MainActivity : AppCompatActivity(), OnColorChangeListener {
+    private lateinit var binding: ActivityMainBinding
     private val mainViewModel: MainViewModel by viewModel()
     private var colorPickerFragment: ColorPickerFragment? = null
     private val prefRepository: PrefRepository by inject()
+    private val slidersBackCallback = object : OnBackPressedCallback(false) {
+        override fun handleOnBackPressed() = hideSliders()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        onBackPressedDispatcher.addCallback(this, slidersBackCallback)
         initLayout()
-        mainViewModel.selectedColor()
-                .observe(this, Observer { updateView(it) })
+        mainViewModel.selectedColor.observe(this, ::updateView)
     }
 
     private fun initLayout() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.enterTransition = Slide(Gravity.END)
-            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        } else {
-            setTheme(R.style.AppTheme_Fullscreen)
-        }
+        window.enterTransition = Slide(Gravity.END)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        mainLayout.setOnLongClickListener {
-            if (!mainViewModel.slidersAreVisible)
+        binding.mainLayout.setOnLongClickListener {
+            if (!mainViewModel.slidersAreVisible) {
                 showSliders()
+            }
             true
         }
 
-        mainLayout.setOnClickListener {
-            if (mainViewModel.slidersAreVisible)
+        binding.mainLayout.setOnClickListener {
+            if (mainViewModel.slidersAreVisible) {
                 hideSliders()
+            }
         }
+        binding.saveButton.setOnClickListener { saveColorImage() }
     }
 
     override fun onResume() {
         super.onResume()
         if (prefRepository.isFirstRun()) {
-            tooltipTextView.visibility = View.VISIBLE
+            binding.tooltipTextView.visibility = View.VISIBLE
             prefRepository.firstRunDone()
         }
     }
 
     private fun updateView(color: GramColor) {
-        mainLayout.setBackgroundColor(Color.rgb(color.red, color.green, color.blue))
-        val saveDrawable = saveButton.drawable
+        binding.mainLayout.setBackgroundColor(Color.rgb(color.red, color.green, color.blue))
+        val saveDrawable = binding.saveButton.drawable
         if (color.shouldOverlayColorBeWhite()) {
-            saveDrawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP)
+            saveDrawable.setTint(Color.WHITE)
         } else {
-            saveDrawable.setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_ATOP)
+            saveDrawable.setTint(Color.BLACK)
         }
-        saveButton.setImageDrawable(saveDrawable)
+        binding.saveButton.setImageDrawable(saveDrawable)
     }
 
     override fun redChanged(red: Int) = mainViewModel.setRed(red)
@@ -84,40 +87,52 @@ class MainActivity : AppCompatActivity(), OnColorChangeListener {
     override fun blueChanged(blue: Int) = mainViewModel.setBlue(blue)
 
     private fun hideSliders() {
+        val fragment = colorPickerFragment ?: return
         supportFragmentManager
-                .beginTransaction()
-                .setCustomAnimations(R.anim.bottom_up, R.anim.bottom_down)
-                .remove(colorPickerFragment!!)
-                .commit()
+            .beginTransaction()
+            .setCustomAnimations(R.anim.bottom_up, R.anim.bottom_down)
+            .remove(fragment)
+            .commit()
         colorPickerFragment = null
         mainViewModel.slidersAreVisible = false
+        slidersBackCallback.isEnabled = false
     }
 
     private fun showSliders() {
-        val colorArgs = Bundle()
-        colorArgs.putInt(PREF_RED, mainViewModel.selectedColor.value!!.red)
-        colorArgs.putInt(PREF_GREEN, mainViewModel.selectedColor.value!!.green)
-        colorArgs.putInt(PREF_BLUE, mainViewModel.selectedColor.value!!.blue)
-        colorPickerFragment = ColorPickerFragment.newInstance(colorArgs)
+        val color = mainViewModel.selectedColor.value ?: return
+        val colorArgs = Bundle().apply {
+            putInt(PREF_RED, color.red)
+            putInt(PREF_GREEN, color.green)
+            putInt(PREF_BLUE, color.blue)
+        }
+        val fragment = ColorPickerFragment.newInstance(colorArgs)
+        colorPickerFragment = fragment
 
         supportFragmentManager
-                .beginTransaction()
-                .setCustomAnimations(R.anim.bottom_up, R.anim.bottom_down)
-                .replace(R.id.slidersContainer, colorPickerFragment!!)
-                .commit()
+            .beginTransaction()
+            .setCustomAnimations(R.anim.bottom_up, R.anim.bottom_down)
+            .replace(R.id.slidersContainer, fragment)
+            .commit()
 
         mainViewModel.slidersAreVisible = true
-
-        // hide tooltip
-        tooltipTextView!!.visibility = View.INVISIBLE
+        slidersBackCallback.isEnabled = true
+        binding.tooltipTextView.visibility = View.INVISIBLE
     }
 
-    fun saveColorImage(view: View) {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+    private fun saveColorImage() {
+        if (
+            Build.VERSION.SDK_INT <= Build.VERSION_CODES.P &&
+            ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+            PackageManager.PERMISSION_GRANTED
+        ) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                 showPermissionDeniedToast()
             } else {
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), PERMISSION_REQUEST_WRITE_STORAGE)
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                    PERMISSION_REQUEST_WRITE_STORAGE,
+                )
             }
         } else {
             downloadColor()
@@ -125,13 +140,12 @@ class MainActivity : AppCompatActivity(), OnColorChangeListener {
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        when (requestCode) {
-            PERMISSION_REQUEST_WRITE_STORAGE -> {
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    downloadColor()
-                } else {
-                    showPermissionDeniedToast()
-                }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PERMISSION_REQUEST_WRITE_STORAGE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                downloadColor()
+            } else {
+                showPermissionDeniedToast()
             }
         }
     }
@@ -150,8 +164,4 @@ class MainActivity : AppCompatActivity(), OnColorChangeListener {
         mainViewModel.saveColor()
     }
 
-    override fun onBackPressed() {
-        if (mainViewModel.slidersAreVisible) hideSliders()
-        else super.onBackPressed()
-    }
 }

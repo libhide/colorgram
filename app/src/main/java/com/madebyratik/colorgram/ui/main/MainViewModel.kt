@@ -1,61 +1,49 @@
 package com.madebyratik.colorgram.ui.main
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.madebyratik.colorgram.data.ColorRepository
 import com.madebyratik.colorgram.model.GramColor
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val colorRepository: ColorRepository,
-                    private val downloadHelper: DownloadHelper) : ViewModel() {
-    private val viewModelJob = Job()
-    private val backgroundScope = CoroutineScope(Dispatchers.IO + viewModelJob)
-
-    var selectedColor = MutableLiveData<GramColor>()
+class MainViewModel(
+    private val colorRepository: ColorRepository,
+    private val downloadHelper: DownloadHelper,
+) : ViewModel() {
+    val selectedColor = MutableLiveData<GramColor>()
     var slidersAreVisible = false
 
     init {
-        backgroundScope.launch {
-            val color = colorRepository.getColor().await()
-            selectedColor.postValue(color)
+        viewModelScope.launch(Dispatchers.IO) {
+            selectedColor.postValue(colorRepository.getColor())
         }
     }
 
-    fun selectedColor(): LiveData<GramColor> {
-        return selectedColor
-    }
-
     fun setRed(red: Int) {
-        selectedColor.value = GramColor(red, selectedColor.value!!.green, selectedColor.value!!.blue)
+        selectedColor.value?.let { selectedColor.value = GramColor(red, it.green, it.blue) }
     }
 
     fun setGreen(green: Int) {
-        selectedColor.value = GramColor(selectedColor.value!!.red, green, selectedColor.value!!.blue)
+        selectedColor.value?.let { selectedColor.value = GramColor(it.red, green, it.blue) }
     }
 
     fun setBlue(blue: Int) {
-        selectedColor.value = GramColor(selectedColor.value!!.red, selectedColor.value!!.green, blue)
+        selectedColor.value?.let { selectedColor.value = GramColor(it.red, it.green, blue) }
     }
 
     fun saveColor() {
-        backgroundScope.launch {
-            colorRepository.saveColor(selectedColor.value!!).await()
+        val color = selectedColor.value ?: return
+        viewModelScope.launch(Dispatchers.IO) {
+            colorRepository.saveColor(color)
         }
     }
 
     fun downloadColor() {
-        backgroundScope.launch {
-            val downloadedFile = downloadHelper.downloadColor(selectedColor.value!!).await()
-            downloadHelper.broadcastSaveIntent(downloadedFile)
+        val color = selectedColor.value ?: return
+        viewModelScope.launch {
+            downloadHelper.downloadColor(color)
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
     }
 }

@@ -18,7 +18,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="40dp"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:onClick="saveColorImage"
+        android:contentDescription="@string/save_color"
         android:src="@drawable/ic_save" />
 
     <TextView

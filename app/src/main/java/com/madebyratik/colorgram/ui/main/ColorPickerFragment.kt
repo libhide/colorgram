@@ -7,56 +7,63 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.fragment.app.Fragment
-import com.madebyratik.colorgram.*
-import kotlinx.android.synthetic.main.fragment_color_select.*
+import com.madebyratik.colorgram.APP_BLUE
+import com.madebyratik.colorgram.APP_GREEN
+import com.madebyratik.colorgram.APP_RED
+import com.madebyratik.colorgram.PREF_BLUE
+import com.madebyratik.colorgram.PREF_GREEN
+import com.madebyratik.colorgram.PREF_RED
+import com.madebyratik.colorgram.databinding.FragmentColorSelectBinding
 
 class ColorPickerFragment : Fragment() {
-    lateinit var colorChangeListener: OnColorChangeListener
+    private var binding: FragmentColorSelectBinding? = null
+    private lateinit var colorChangeListener: OnColorChangeListener
 
     private val onSeekBarChangeListener = object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
-                when (seekBar.tag) {
-                    "red" -> colorChangeListener.redChanged(i)
-                    "green" -> colorChangeListener.greenChanged(i)
-                    "blue" -> colorChangeListener.blueChanged(i)
-                }
+        override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+            when (seekBar.tag) {
+                "red" -> colorChangeListener.redChanged(progress)
+                "green" -> colorChangeListener.greenChanged(progress)
+                "blue" -> colorChangeListener.blueChanged(progress)
             }
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         }
+
+        override fun onStartTrackingTouch(seekBar: SeekBar?) = Unit
+
+        override fun onStopTrackingTouch(seekBar: SeekBar?) = Unit
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        try {
-            colorChangeListener = (context as OnColorChangeListener?)!!
-        } catch (e: ClassCastException) {
-            throw ClassCastException("$context must implement ${ColorPickerFragment::class.java.simpleName}")
-        }
+        colorChangeListener = context as? OnColorChangeListener
+            ?: throw ClassCastException("$context must implement ${ColorPickerFragment::class.java.simpleName}")
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_color_select, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        return FragmentColorSelectBinding.inflate(inflater, container, false)
+            .also { binding = it }
+            .root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val red = arguments?.getInt(PREF_RED) ?: APP_RED
-        val green = arguments?.getInt(PREF_GREEN) ?: APP_GREEN
-        val blue = arguments?.getInt(PREF_BLUE) ?: APP_BLUE
+        val binding = requireNotNull(binding)
+        binding.redSlider.progress = arguments?.getInt(PREF_RED) ?: APP_RED
+        binding.greenSlider.progress = arguments?.getInt(PREF_GREEN) ?: APP_GREEN
+        binding.blueSlider.progress = arguments?.getInt(PREF_BLUE) ?: APP_BLUE
 
-        redSlider.progress = red
-        greenSlider.progress = green
-        blueSlider.progress = blue
-
-        mutableListOf(redSlider, greenSlider, blueSlider).forEach {
+        listOf(binding.redSlider, binding.greenSlider, binding.blueSlider).forEach {
             it.setOnSeekBarChangeListener(onSeekBarChangeListener)
         }
     }
 
+    override fun onDestroyView() {
+        binding = null
+        super.onDestroyView()
+    }
+
     companion object {
-        fun newInstance(args: Bundle): ColorPickerFragment {
-            val fragment = ColorPickerFragment()
-            fragment.arguments = args
-            return fragment
+        fun newInstance(args: Bundle) = ColorPickerFragment().apply {
+            arguments = args
         }
     }
 }
