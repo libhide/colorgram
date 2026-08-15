@@ -68,10 +68,9 @@ Create the signed Android App Bundle with:
 
 ## Repo Structure
 
-The repo has three branches: `master`, `legacy` and `gh-pages`.
+The repo has two long-lived branches: `master` and `gh-pages`.
 
-- `master` has the updated codebase written in Kotlin with all the tools the cool kids are using these days. This was again a weekend project I did to learn things.
-- `legacy` is the old codebase in Java with all sorts of terrible coding practices
+- `master` contains the Android app written in Kotlin.
 - `gh-pages` houses the landing page for the website because of course I'm extra af :)
 
 ## Postmortem
