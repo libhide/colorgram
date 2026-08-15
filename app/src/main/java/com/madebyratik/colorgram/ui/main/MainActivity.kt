@@ -13,7 +13,9 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import com.madebyratik.colorgram.PREF_BLUE
 import com.madebyratik.colorgram.PREF_GREEN
 import com.madebyratik.colorgram.PREF_RED
@@ -47,6 +49,21 @@ class MainActivity : AppCompatActivity(), OnColorChangeListener {
     private fun initLayout() {
         window.enterTransition = Slide(Gravity.END)
         WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        val initialPaddingTop = binding.mainLayout.paddingTop
+        ViewCompat.setOnApplyWindowInsetsListener(binding.mainLayout) { view, windowInsets ->
+            val topInset = windowInsets.getInsets(
+                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout(),
+            ).top
+            view.setPadding(
+                view.paddingLeft,
+                initialPaddingTop + topInset,
+                view.paddingRight,
+                view.paddingBottom,
+            )
+            windowInsets
+        }
+        ViewCompat.requestApplyInsets(binding.mainLayout)
 
         binding.mainLayout.setOnLongClickListener {
             if (!mainViewModel.slidersAreVisible) {
