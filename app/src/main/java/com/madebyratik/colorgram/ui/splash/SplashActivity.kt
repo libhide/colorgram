@@ -3,6 +3,7 @@ package com.madebyratik.colorgram.ui.splash
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.madebyratik.colorgram.R
 import com.madebyratik.colorgram.ui.main.MainActivity
@@ -24,7 +25,7 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        splashHandler = Handler()
+        splashHandler = Handler(Looper.getMainLooper())
         splashHandler.postDelayed(splashRunnable, SPLASH_DURATION)
     }
 
